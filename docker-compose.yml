@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: web
+    build: .
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - "3000:3000"
+  db:
+    container_name: db
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+      - POSTGRES_DB=app
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U chat -d chat" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
