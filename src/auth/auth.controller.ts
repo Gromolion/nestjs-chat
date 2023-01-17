@@ -14,7 +14,11 @@ import { AuthService } from './auth.service';
 import { LoginExceptionFilter } from './filters/loginException.filter';
 import { LoginGuard } from './guards/login.guard';
 import { RegisterExceptionFilter } from './filters/registerException.filter';
+import { AuthenticatedExceptionFilter } from './filters/authenticatedException.filter';
+import { GuestGuard } from './guards/guest.guard';
 
+@UseFilters(AuthenticatedExceptionFilter)
+@UseGuards(GuestGuard)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -31,7 +35,7 @@ export class AuthController {
   @UseFilters(LoginExceptionFilter)
   @UseGuards(LoginGuard)
   login(@Res() res) {
-    return res.redirect('/');
+    return res.redirect('/chat');
   }
 
   @Get('register')
@@ -50,8 +54,10 @@ export class AuthController {
 
   @Post('register')
   @UseFilters(RegisterExceptionFilter)
-  async register(@Body() registerUserDto: RegisterUserDto) {
+  async register(@Body() registerUserDto: RegisterUserDto, @Res() res) {
     await this.authService.registerUser(registerUserDto);
+
+    return res.redirect('/auth/login');
   }
 
   @Get('logout')

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Message } from '../../messages/entities/message.entity';
 
 @Entity()
 export class User {
@@ -16,4 +17,12 @@ export class User {
 
   @Column({ default: null })
   socket: string;
+
+  @OneToMany(() => Message, (message) => message.user)
+  messages: Message[];
+
+  constructor(name: string, password: string) {
+    this.name = name;
+    this.password = password;
+  }
 }

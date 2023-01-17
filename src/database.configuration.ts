@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { env } from 'process';
 import { User } from './users/entities/user.entity';
+import { Message } from './messages/entities/message.entity';
 
 export class DatabaseConfiguration implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
@@ -11,7 +12,7 @@ export class DatabaseConfiguration implements TypeOrmOptionsFactory {
       username: env.DB_USER,
       password: env.DB_PASSWORD,
       database: env.DB_NAME,
-      entities: [User],
+      entities: [User, Message],
       synchronize: true,
     };
   }

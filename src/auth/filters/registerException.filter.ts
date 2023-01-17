@@ -20,7 +20,7 @@ export class RegisterExceptionFilter implements ExceptionFilter {
 
     let parsedMessages;
 
-    if (typeof validationMessages === "object") {
+    if (typeof validationMessages === 'object') {
       parsedMessages = {};
       validationMessages.forEach((message) => {
         parsedMessages[message.property] = [];
@@ -39,9 +39,8 @@ export class RegisterExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof BadRequestException) {
       request.flash('validationErrors', JSON.stringify(parsedMessages));
-      response.redirect('/auth/register');
-    } else {
-      response.redirect('/auth/register');
     }
+
+    response.redirect('/auth/register');
   }
 }

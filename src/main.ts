@@ -7,7 +7,7 @@ import * as passport from 'passport';
 import * as session from 'express-session';
 import flash = require('connect-flash');
 import * as exphbs from 'express-handlebars';
-import { BadRequestException, ValidationPipe } from "@nestjs/common";
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -27,6 +27,14 @@ async function bootstrap() {
   const hbs = exphbs.create({
     defaultLayout: 'master',
     extname: 'hbs',
+    helpers: {
+      isEq: function (cond1, cond2, options) {
+        return cond1 == cond2 ? options.fn(this) : options.inverse(this);
+      },
+      slice: function (string, start, end) {
+        return string.slice(start, end);
+      },
+    },
   });
 
   app.engine('hbs', hbs.engine);
