@@ -1,0 +1,42 @@
+<style>
+  button {
+    background-color: #bff5e2;
+    border: 1px solid #949494;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.1s linear;
+  }
+  button:hover {
+    background-color: #96c2b2;
+  }
+  a {
+    text-decoration: none;
+  }
+  .form-group {
+    width: fit-content;
+    margin: 0 auto 10px;
+  }
+  .error {
+    font-size: 11px;
+    color: red;
+  }
+</style>
+
+<div class="container bg-light rounded w-25" style="margin: 200px auto">
+  <form action="/auth/login" method="post" class="p-3">
+    <div class="d-flex justify-content-between">
+      <h5>Авторизация</h5>
+      <a href="/auth/register">Зарегистрироваться</a>
+    </div>
+    <div class="form-group">
+      <input type="text" name="name" placeholder="Введите ваше имя">
+      <div class="error">{{ error }}</div>
+    </div>
+    <div class="form-group">
+      <input type="password" name="password" placeholder="Введите ваш пароль">
+    </div>
+    <div class="text-center">
+      <button>Войти</button>
+    </div>
+  </form>
+</div>
